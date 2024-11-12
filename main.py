@@ -1,4 +1,5 @@
 import json
+from json import JSONDecodeError
 from textwrap import indent
 from tkinter import *
 from tkinter import messagebox
@@ -46,9 +47,8 @@ def save():
             with open("data.json", "r") as data_file:
                 data = json.load(data_file)
         except FileNotFoundError:
-            data.update(new_data)
             with open("data.json", "w") as data_file:
-                json.dump(data, data_file, indent=4)
+                json.dump(new_data, data_file, indent=4)
         else:
             data.update(new_data)
 
