@@ -27,6 +27,24 @@ def generate_password():
     pyperclip.copy(password)
 
 
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def find_password():
+    website = website_entry.get()
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No data file found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}, \nPassword: {password}")
+
+        else:
+            messagebox.showinfo(title="Error", message=f"Website {website} not found.")
+
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def save():
@@ -74,28 +92,31 @@ canvas.grid(row=0, column=1)
 website_label = Label(text="Website")
 website_label.grid(row=1, column=0)
 
-website_entry = Entry(width=35)
-website_entry.grid(row=1, column=1, columnspan=2, sticky="w",padx=5, pady=5)
+website_entry = Entry(width=27)
+website_entry.grid(row=1, column=1, pady=5)
 website_entry.focus()
 
 email_username_label = Label(text="Email/Username")
 email_username_label.grid(row=2, column=0)
 
-email_user_entry = Entry(width=35)
-email_user_entry.grid(row=2, column=1, columnspan=2, sticky="w", padx=5, pady=5)
+email_user_entry = Entry(width=27)
+email_user_entry.grid(row=2, column=1, pady=5)
 email_user_entry.insert(0, "wiliam.gomes99@gmail.com")
 
 password_label = Label(text="Password")
 password_label.grid(row=3, column=0)
 
-password_entry = Entry(width=21)
-password_entry.grid(row=3, column=1, sticky="w", padx=5, pady=5)
+password_entry = Entry(width=27)
+password_entry.grid(row=3, column=1, padx=5, pady=5)
 
 generate_password_button = Button(text="Generate Password", command=generate_password)
-generate_password_button.grid(row=3, column=1, sticky="E", pady=5 )
+generate_password_button.grid(row=3, column=2, pady=10 )
 
 add_button = Button(text="Add", width=30, command=save)
-add_button.grid(row=4, column=1, columnspan=2, sticky="w", pady=5)
+add_button.grid(row=4, column=1, columnspan=2, pady=5)
+
+search_button = Button(text="Search", width=13, command=find_password)
+search_button.grid(row=1, column=2, pady=10)
 
 
 
